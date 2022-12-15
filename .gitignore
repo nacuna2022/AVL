@@ -1,0 +1,8 @@
+tags
+*.o
+main
+*.swp
+.settings/
+.project
+.cproject
+.vs/
