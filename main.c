@@ -9,12 +9,18 @@ struct node_struct {
 
 static struct avl_head *tree;
 
+int get_node_value(struct avl_head *head)
+{
+        struct node_struct *n = container_of(head, struct node_struct, head);
+        return n->value;
+}
+
+
 static struct node_struct *new_node(const int value)
 {
         struct node_struct *nn;
         nn = malloc(sizeof(struct node_struct));
         if (nn) {
-                avl_init_head(&nn->head);
                 nn->value = value;
         }
         return nn;
@@ -35,13 +41,16 @@ static int compare_nodes(struct avl_head *head, struct avl_head *node)
         return err; /* equal, let the library decide */
 }
 
-static int values[10] = {5, 4, 6, 1, 2, 3, 4, 5, 9, 10};
+//static int values[10] = {25, 15, 1, 2, 12, 5, 34, 27, 7, 30};
+static int values[] = {5, 4, 3, 2, 1};
 
 int main(void)
 {
-        for (size_t i=0; i<10; i++) {
+        for (size_t i=0; i<(sizeof values/sizeof(int)); i++) {
                 struct node_struct *node;
                 node = new_node((int)values[i]);
+                printf("inserting %d: ", node->value);
+                fflush(stdout);
                 tree = avl_add(tree, &node->head, compare_nodes);
         }
         return 0;
